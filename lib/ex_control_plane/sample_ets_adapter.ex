@@ -20,13 +20,6 @@ defmodule ExControlPlane.SampleEtsAdapter do
     ExControlPlane.ConfigCache.load_events(cluster, [{:updated, api_id}])
   end
 
-  def get_api_config(tid, cluster_id, api_id) do
-    case :ets.lookup(tid, {cluster_id, api_id}) do
-      [{_, config}] -> {:ok, config}
-      [] -> {:error, "not_found"}
-    end
-  end
-
   def map_reduce(tid, mapper_fn, acc) do
     :ets.foldl(
       fn {_, config}, {results, acc} ->
